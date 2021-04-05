@@ -7,7 +7,3 @@ def home(request):
 def cities(request):
     return render(request, 'website/cities.html')
 
-
-def ss(request):
-    return render(request, 'website/cities.html')
-
