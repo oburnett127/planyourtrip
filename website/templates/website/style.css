@@ -1,0 +1,35 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+.w3-button {
+  padding: 16px;
+}
+
+.button {
+  position: relative;
+  border: 1.5px solid rgb(4, 4, 92);
+  margin: 0;
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  transform: translate(-50%, -33%);
+  color: rgb(4, 4, 92);
+  border-radius: 25px;
+}
+
+.home {
+    height: 100%;
+}
+
+.table {
+  width: 100%;
+  border: none;
+}
+
+.header {
+  background-color: #30373f;
+}
