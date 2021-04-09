@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c7b95d5-8138-4383-884b-8739e364ff9c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/website/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planyourtrip/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/planyourtrip/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planyourtrip/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/planyourtrip/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/website/static/website/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/templates/website/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/website/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/views.py" afterDir="false" />
     </list>
@@ -12,6 +16,14 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -23,9 +35,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/website/static/website" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/website/static/website" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -41,7 +60,12 @@
       <workItem from="1617653526077" duration="228000" />
       <workItem from="1617654619439" duration="473000" />
       <workItem from="1617655210445" duration="4910000" />
-      <workItem from="1617718106680" duration="3776000" />
+      <workItem from="1617718106680" duration="16928000" />
+      <workItem from="1617799357672" duration="3676000" />
+      <workItem from="1617804588468" duration="34000" />
+      <workItem from="1617830940305" duration="1997000" />
+      <workItem from="1617967431438" duration="6974000" />
+      <workItem from="1617981258502" duration="309000" />
     </task>
     <servers />
   </component>

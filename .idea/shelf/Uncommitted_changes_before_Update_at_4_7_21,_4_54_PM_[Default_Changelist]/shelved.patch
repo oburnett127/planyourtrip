@@ -1,0 +1,178 @@
+Index: website/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.shortcuts import render\nfrom .models import Question\n# Create your views here.\ndef home(request):\n    context = {\n        'questions': Question.objects.all()\n    }\n    return render(request, 'website/home.html', context)\n\ndef cities(request):\n    return render(request, 'website/cities.html')\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/website/views.py b/website/views.py
+--- a/website/views.py	(revision c8ac43f9e8c415845f866a0a2c57e11c92dab2b9)
++++ b/website/views.py	(date 1617803602833)
+@@ -1,13 +1,30 @@
+ from django.shortcuts import render
+ from .models import Question
+-# Create your views here.
++from website.forms import Usr_answers
++from django.http import HttpResponseRedirect
++from django.shortcuts import render
++from django.template import RequestContext
++
+ def home(request):
++    ps = 1
++    question = Question.objects.get(id=ps)
++    if request.method == 'POST':
++        ps = ps + 1
+     context = {
+-        'questions': Question.objects.all()
+-    }
++        'question': question
++                }
+     return render(request, 'website/home.html', context)
+ 
++    #context = RequestContext(request)
++    #form_s = Usr_answers()
++    #if request.method == 'POST':
++        #form = usr_answer(request.POST)
++        #if form.is_valid():
++            #form.save()
++            #return HttpResponseRedirect('/%s/', id_num+1 )
++    #if request.method == 'GET':
++        #return render(request, 'website/home.html', {'form':form_s, 'id_num':id_num}, context)
++
++
+ def cities(request):
+     return render(request, 'website/cities.html')
+-
+-
+Index: website/templates/website/home.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n<html>\n<title>Plan Your Trip</title>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://www.w3schools.com/w3css/4/w3.css\">\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Raleway\">\n<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n<style>\nbody,h1,h2,h3,h4,h5,h6 {font-family: \"Raleway\", sans-serif}\n\nbody, html {\n  height: 100%;\n  line-height: 1.8;\n}\n\n.bgimg-1 {\n  background-position: center;\n  background-size: cover;\n  background-image: url(\".\\\\vacation.jpg\");\n  min-height: 100%;\n}\n\n.w3-bar .w3-button {\n  padding: 16px;\n}\n</style>\n<body>\n\n<!-- Header with full-height image -->\n<header class=\"bgimg-1 w3-display-container w3-grayscale-min\" id=\"home\">\n  <div class=\"w3-display-top w3-text-black\" style=\"padding:48px\">\n    <span class=\"w3-jumbo w3-hide-small\">Plan your trip</span><br>\n    <span class=\"w3-large\">Just answer a few questions to help us find the best cities for your vacation</span>\n    {% for question in questions %}\n      <span class=\"w3-large\" id=\"question\">{{ question.question }}</span>\n    {% endfor %}\n    <p><input type=\"button\" id=\"answer1\" name=\"answer1button\" class=\"w3-button w3-white w3-padding-large w3-large w3-margin-top w3-hover-opacity-off\" onclick=\"goPython()\"></p>\n    <p><input type=\"button\" id=\"answer2\" name=\"answer2button\" class=\"w3-button w3-white w3-padding-large w3-large w3-margin-top w3-hover-opacity-off\" onclick=\"goPython()\"></p>\n  </div>\n</header>\n\n<footer class=\"w3-center w3-black w3-padding-64\">\n  <p>Powered by <a href=\"https://www.w3schools.com/w3css/default.asp\" title=\"W3.CSS\" target=\"_blank\" class=\"w3-hover-text-green\">w3.css</a></p>\n</footer>\n\n<script src=\"http://code.jquery.com/jquery-3.3.1.min.js\" integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\" crossorigin=\"anonymous\"></script>\n\n<script>\n    function goPython(){\n        $.ajax({\n          url: \"planyourtrip.py\",\n         context: document.body\n        });\n    }\n</script>\n</body>\n</html>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/website/templates/website/home.html b/website/templates/website/home.html
+--- a/website/templates/website/home.html	(revision c8ac43f9e8c415845f866a0a2c57e11c92dab2b9)
++++ b/website/templates/website/home.html	(date 1617801712202)
+@@ -32,9 +32,7 @@
+   <div class="w3-display-top w3-text-black" style="padding:48px">
+     <span class="w3-jumbo w3-hide-small">Plan your trip</span><br>
+     <span class="w3-large">Just answer a few questions to help us find the best cities for your vacation</span>
+-    {% for question in questions %}
+-      <span class="w3-large" id="question">{{ question.question }}</span>
+-    {% endfor %}
++      <span class="w3-large" id="question">{{ question }}</span>
+     <p><input type="button" id="answer1" name="answer1button" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-hover-opacity-off" onclick="goPython()"></p>
+     <p><input type="button" id="answer2" name="answer2button" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-hover-opacity-off" onclick="goPython()"></p>
+   </div>
+Index: planyourtrip/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.contrib import admin\nfrom django.urls import path\nfrom website import views\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n    path('', views.home, name='home_page'),\n    path('cities/', views.cities, name='cities_page'),\n]\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/planyourtrip/urls.py b/planyourtrip/urls.py
+--- a/planyourtrip/urls.py	(revision c8ac43f9e8c415845f866a0a2c57e11c92dab2b9)
++++ b/planyourtrip/urls.py	(date 1617802108820)
+@@ -1,9 +1,10 @@
+ from django.contrib import admin
+ from django.urls import path
++from django.conf.urls import url
+ from website import views
+ 
+ urlpatterns = [
+     path('admin/', admin.site.urls),
+-    path('', views.home, name='home_page'),
++    url('home/', views.home, name='home'),
+     path('cities/', views.cities, name='cities_page'),
+ ]
+Index: website/forms.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/website/forms.py b/website/forms.py
+new file mode 100644
+--- /dev/null	(date 1617743810876)
++++ b/website/forms.py	(date 1617743810876)
+@@ -0,0 +1,4 @@
++from django import forms
++
++class Usr_answers(forms.Form):
++    usr_answer = forms.CharField(widget=forms.TextInput())
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"4c7b95d5-8138-4383-884b-8739e364ff9c\" name=\"Default Changelist\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/db.sqlite3\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/db.sqlite3\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/website/models.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/website/models.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/website/templates/website/home.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/website/templates/website/home.html\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/website/views.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/website/views.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"ProjectId\" id=\"1qlNeZnFqrojjqi3AB0mFhV9lJk\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"4c7b95d5-8138-4383-884b-8739e364ff9c\" name=\"Default Changelist\" comment=\"\" />\n      <created>1617650312790</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1617650312790</updated>\n      <workItem from=\"1617650314753\" duration=\"5000\" />\n      <workItem from=\"1617650397954\" duration=\"1454000\" />\n      <workItem from=\"1617652771353\" duration=\"474000\" />\n      <workItem from=\"1617653526077\" duration=\"228000\" />\n      <workItem from=\"1617654619439\" duration=\"473000\" />\n      <workItem from=\"1617655210445\" duration=\"4910000\" />\n      <workItem from=\"1617718106680\" duration=\"3776000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c8ac43f9e8c415845f866a0a2c57e11c92dab2b9)
++++ b/.idea/workspace.xml	(date 1617803522512)
+@@ -2,9 +2,10 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="4c7b95d5-8138-4383-884b-8739e364ff9c" name="Default Changelist" comment="">
++      <change afterPath="$PROJECT_DIR$/website/forms.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/website/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/models.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/planyourtrip/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/planyourtrip/settings.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/planyourtrip/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/planyourtrip/urls.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/website/templates/website/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/website/templates/website/home.html" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/views.py" afterDir="false" />
+     </list>
+@@ -12,6 +13,14 @@
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="HTML File" />
++        <option value="Python Script" />
++      </list>
++    </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -23,6 +32,7 @@
+     <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent">
++    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="WebServerToolWindowFactoryState" value="false" />
+@@ -41,7 +51,8 @@
+       <workItem from="1617653526077" duration="228000" />
+       <workItem from="1617654619439" duration="473000" />
+       <workItem from="1617655210445" duration="4910000" />
+-      <workItem from="1617718106680" duration="3776000" />
++      <workItem from="1617718106680" duration="16928000" />
++      <workItem from="1617799357672" duration="3174000" />
+     </task>
+     <servers />
+   </component>
+Index: planyourtrip/settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\nDjango settings for planyourtrip project.\n\nGenerated by 'django-admin startproject' using Django 3.1.7.\n\nFor more information on this file, see\nhttps://docs.djangoproject.com/en/3.1/topics/settings/\n\nFor the full list of settings and their values, see\nhttps://docs.djangoproject.com/en/3.1/ref/settings/\n\"\"\"\n\nfrom pathlib import Path\n\n# Build paths inside the project like this: BASE_DIR / 'subdir'.\nBASE_DIR = Path(__file__).resolve().parent.parent\n\n\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/\n\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'a%%-&cw)^^28o2ozvdh+i+yh%^md#jiz)+gnp_63&oswmnk%y8'\n\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\n\nALLOWED_HOSTS = []\n\n\n# Application definition\n\nINSTALLED_APPS = [\n    'website.apps.WebsiteConfig',\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n]\n\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\n\nROOT_URLCONF = 'planyourtrip.urls'\n\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [BASE_DIR / 'templates']\n        ,\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',\n                'django.contrib.auth.context_processors.auth',\n                'django.contrib.messages.context_processors.messages',\n            ],\n        },\n    },\n]\n\nWSGI_APPLICATION = 'planyourtrip.wsgi.application'\n\n\n# Database\n# https://docs.djangoproject.com/en/3.1/ref/settings/#databases\n\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': BASE_DIR / 'db.sqlite3',\n    }\n}\n\n\n# Password validation\n# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators\n\nAUTH_PASSWORD_VALIDATORS = [\n    {\n        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',\n    },\n]\n\n\n# Internationalization\n# https://docs.djangoproject.com/en/3.1/topics/i18n/\n\nLANGUAGE_CODE = 'en-us'\n\nTIME_ZONE = 'UTC'\n\nUSE_I18N = True\n\nUSE_L10N = True\n\nUSE_TZ = True\n\n\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/3.1/howto/static-files/\n\nSTATIC_URL = '/static/'\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/planyourtrip/settings.py b/planyourtrip/settings.py
+--- a/planyourtrip/settings.py	(revision c8ac43f9e8c415845f866a0a2c57e11c92dab2b9)
++++ b/planyourtrip/settings.py	(date 1617742648169)
+@@ -31,6 +31,7 @@
+ # Application definition
+ 
+ INSTALLED_APPS = [
++    'widget_tweaks',
+     'website.apps.WebsiteConfig',
+     'django.contrib.admin',
+     'django.contrib.auth',
